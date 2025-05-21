@@ -144,13 +144,19 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     }
 
     bool oled_task_user(void) {
+        // Check if the keyboard has been inactive
+        if (last_input_activity_elapsed() > OLED_TIMEOUT) {
+            oled_off();
+            return false;
+        }
+
         oled_clear();
-        
+
         // Only show OS info on the master side
         if (is_keyboard_master()) {
             // Get the OS variant
             os_variant_t os = detected_host_os();
-            
+
             // Convert enum to appropriate string
             switch (os) {
                 case OS_MACOS:
