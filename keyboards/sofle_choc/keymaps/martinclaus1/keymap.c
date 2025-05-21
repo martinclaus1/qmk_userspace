@@ -161,19 +161,15 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
             switch (os) {
                 case OS_MACOS:
                     oled_write_P(PSTR("macOS"), false);
-                    layer_move(_MAC0);
                     break;
                 case OS_WINDOWS:
                     oled_write_P(PSTR("Windows"), false);
-                    layer_move(_WIN0);
                     break;
-                case OS_LINUX:
+               case OS_LINUX:
                     oled_write_P(PSTR("Linux"), false);
-                    layer_move(_WIN0);
                     break;
                 case OS_IOS:
                     oled_write_P(PSTR("iOS"), false);
-                    layer_move(_MAC0);
                     break;
                 default:
                     oled_write_P(PSTR("Unknown"), false);
@@ -187,6 +183,24 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
         return false;
     }
 #endif
+
+bool process_detected_host_os_user(os_variant_t detected_os) {
+
+
+    switch (detected_os) {
+        case OS_LINUX:
+        case OS_UNSURE:
+        case OS_WINDOWS:
+            layer_move(_MAC0);
+            break;
+        case OS_MACOS:
+        case OS_IOS:
+            layer_move(_MAC0);
+            break;
+    }
+
+    return true;
+}
 
 
 void keyboard_post_init_user(void) {
