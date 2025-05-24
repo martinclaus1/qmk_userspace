@@ -24,14 +24,18 @@
 // I've found this helps with some ProMicros where the slave does not boot
 #define SPLIT_USB_DETECT
 
-#define RGB_MATRIX_SLEEP     // turn off effects when suspended
 #define SPLIT_TRANSPORT_MIRROR             // If LED_MATRIX_KEYPRESSES or LED_MATRIX_KEYRELEASES is enabled, you also will want to enable SPLIT_TRANSPORT_MIRROR
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 100  // limits maximum brightness of LEDs (max 255). Higher may cause the controller to crash.
 
 #ifdef OLED_ENABLE
-    #define OLED_TIMEOUT 30000
+#define OLED_TIMEOUT 30000
 #endif
 
 #ifdef OS_DETECTION_ENABLE
-    #define OS_DETECTION_KEYBOARD_RESET
+#define OS_DETECTION_KEYBOARD_RESET
+#endif
+
+#ifdef RGB_MATRIX_ENABLE
+    #define RGB_MATRIX_TIMEOUT 30000
+    #define RGB_MATRIX_SLEEP     // turn off effects when suspended
+    #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 100  // limits maximum brightness of LEDs (max 255). Higher may cause the controller to crash.
 #endif

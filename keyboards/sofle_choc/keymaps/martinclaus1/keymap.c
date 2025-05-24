@@ -204,4 +204,7 @@ bool process_detected_host_os_user(os_variant_t detected_os) {
 
 
 void keyboard_post_init_user(void) {
+    rgb_matrix_enable();
+    rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+    rgb_matrix_sethsv(5, 217, 210);
 }

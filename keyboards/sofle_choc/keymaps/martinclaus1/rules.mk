@@ -9,4 +9,4 @@ MOUSEKEY_ENABLE = yes
 OS_DETECTION_ENABLE = yes
 
 # Enable per-key lighting
-RGB_MATRIX_ENABLE = no
+RGB_MATRIX_ENABLE = yes
