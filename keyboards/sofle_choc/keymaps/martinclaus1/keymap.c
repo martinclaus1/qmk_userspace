@@ -17,15 +17,7 @@
 #include "keymap_german.h"
 #include "print.h"
 
-enum layers {
-    _MAC0,
-    _MAC1,
-    _MAC2,
-    _WIN0,
-    _WIN1,
-    _WIN2
-};
-
+enum layers { _MAC0, _MAC1, _MAC2, _WIN0, _WIN1, _WIN2 };
 
 // const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_1, KC_MUTE);
 
@@ -34,7 +26,7 @@ enum layers {
 // 	&delete_key_override
 // };
 
-
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
  * Colemak DH
@@ -134,59 +126,59 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 };
 #endif
 
-#ifdef OLED_ENABLE
-    oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-        if (is_keyboard_master()) {
-            return OLED_ROTATION_0;  // flips the display 180 degrees if offhand
-        }
+// clang-format on
 
-        return rotation;
+#ifdef OLED_ENABLE
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    if (is_keyboard_master()) {
+        return OLED_ROTATION_0; // flips the display 180 degrees if offhand
     }
 
-    bool oled_task_user(void) {
-        // Check if the keyboard has been inactive
-        if (last_input_activity_elapsed() > OLED_TIMEOUT) {
-            oled_off();
-            return false;
-        }
+    return rotation;
+}
 
-        oled_clear();
-
-        // Only show OS info on the master side
-        if (is_keyboard_master()) {
-            // Get the OS variant
-            os_variant_t os = detected_host_os();
-
-            // Convert enum to appropriate string
-            switch (os) {
-                case OS_MACOS:
-                    oled_write_P(PSTR("macOS"), false);
-                    break;
-                case OS_WINDOWS:
-                    oled_write_P(PSTR("Windows"), false);
-                    break;
-               case OS_LINUX:
-                    oled_write_P(PSTR("Linux"), false);
-                    break;
-                case OS_IOS:
-                    oled_write_P(PSTR("iOS"), false);
-                    break;
-                default:
-                    oled_write_P(PSTR("Unknown"), false);
-                    break;
-            }
-        } else {
-            // For the slave half, display a different message or leave blank
-            oled_write_P(PSTR("Sofle"), false);
-        }
-
+bool oled_task_user(void) {
+    // Check if the keyboard has been inactive
+    if (last_input_activity_elapsed() > OLED_TIMEOUT) {
+        oled_off();
         return false;
     }
+
+    oled_clear();
+
+    // Only show OS info on the master side
+    if (is_keyboard_master()) {
+        // Get the OS variant
+        os_variant_t os = detected_host_os();
+
+        // Convert enum to appropriate string
+        switch (os) {
+            case OS_MACOS:
+                oled_write_P(PSTR("macOS"), false);
+                break;
+            case OS_WINDOWS:
+                oled_write_P(PSTR("Windows"), false);
+                break;
+            case OS_LINUX:
+                oled_write_P(PSTR("Linux"), false);
+                break;
+            case OS_IOS:
+                oled_write_P(PSTR("iOS"), false);
+                break;
+            default:
+                oled_write_P(PSTR("Unknown"), false);
+                break;
+        }
+    } else {
+        // For the slave half, display a different message or leave blank
+        oled_write_P(PSTR("Sofle"), false);
+    }
+
+    return false;
+}
 #endif
 
 bool process_detected_host_os_user(os_variant_t detected_os) {
-
-
     switch (detected_os) {
         case OS_LINUX:
         case OS_UNSURE:
@@ -201,7 +193,6 @@ bool process_detected_host_os_user(os_variant_t detected_os) {
 
     return true;
 }
-
 
 void keyboard_post_init_user(void) {
     rgb_matrix_enable();
