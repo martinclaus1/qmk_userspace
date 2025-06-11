@@ -19,24 +19,40 @@
 
 enum layers { _MAC0, _MAC1, _MAC2, _WIN0, _WIN1, _WIN2 };
 
-// const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_1, KC_MUTE);
+// Use the shift mask to recognize both left and right shift keys
+const key_override_t exclamation_mark  = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_1, S(DE_1), ~0, (uint8_t)~0);    // !
+const key_override_t at_sign           = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_2, A(DE_L), ~0, (uint8_t)~0);    // @
+const key_override_t hash_sign         = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_3, DE_HASH, ~0, (uint8_t)~0);    // #
+const key_override_t dollar_sign       = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_4, DE_DLR, ~0, (uint8_t)~0);     // $
+const key_override_t percent_sign      = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_5, DE_PERC, ~0, (uint8_t)~0);    // %
+const key_override_t caret_sign        = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_6, DE_CIRC, ~0, (uint8_t)~0);    // ^
+const key_override_t ampersand_sign    = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_7, DE_AMPR, ~0, (uint8_t)~0);    // &
+const key_override_t plus_sign         = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_8, DE_PLUS, ~0, (uint8_t)~0);    // +
+const key_override_t left_parenthesis  = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_9, DE_LPRN, ~0, (uint8_t)~0);    // (
+const key_override_t right_parenthesis = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_0, DE_RPRN, ~0, (uint8_t)~0);    // )
+const key_override_t underscore_sign   = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_GRV, DE_UNDS, ~0, (uint8_t)~0);  // _
+const key_override_t question_mark     = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_COMM, DE_QUES, ~0, (uint8_t)~0); // ?
+const key_override_t less_than_sign    = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_DOT, DE_LABK, ~0, (uint8_t)~0);  // <
+const key_override_t greater_than_sign = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_SLSH, DE_RABK, ~0, (uint8_t)~0); // >
+const key_override_t double_quote_sign = ko_make_with_layers_and_negmods(MOD_MASK_SHIFT, DE_QUOT, DE_DQUO, ~0, (uint8_t)~0); // "
 
-// // This globally defines all key overrides to be used
-// const key_override_t *key_overrides[] = {
-// 	&delete_key_override
-// };
+// This globally defines all key overrides to be used
+const key_override_t *key_overrides[] = {&exclamation_mark, &at_sign, &hash_sign, &dollar_sign, &percent_sign, &caret_sign, &ampersand_sign, &plus_sign, &left_parenthesis, &right_parenthesis, &underscore_sign, &question_mark, &less_than_sign, &greater_than_sign, &double_quote_sign};
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
  * Colemak DH
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |  `   |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
+ * |  +   |   !  |   @  |   #  |   $  |   %  |                    |   ^  |   &  |   +  |   (  |   )  |  _   |
+ * |  =   |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  -   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | ESC  |   Q  |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |   ;  | Bspc |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Tab  |   A  |   R  |   S  |   T  |   G  |-------.    ,-------|   M  |   N  |   E  |   I  |   O  |  '   |
+ * |      |      |      |      |      |      |-------.    ,-------|      |      |      |      |      |  "   |
+ * | Tab  |   A  |   R  |   S  |   T  |   G  |       .    ,       |   M  |   N  |   E  |   I  |   O  |  '   |
  * |------+------+------+------+------+------|  Mute |    | Pause |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |       |    |       |      |      |   <  |   >  |   ?  |      |
  * |LShift|   Z  |   X  |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   /  |RShift|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            | LCTL | LALT | LCMD | MO(1)| /Enter  /       \Space \  | MO(2)| RCMD | RALT | RCTL |
@@ -44,73 +60,74 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            `----------------------------------'           '------''---------------------------'
  *
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |  `   |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | ESC  |   Q  |   W  |   F  |   P  |   B  |                    |   J  |   L  |   ↑  |   Y  |   ;  | Bspc |
+ * |      |      |      |      |      |      |                    |      |      |   ↑  |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Tab  |   A  |   R  |   S  |   T  |   G  |-------.    ,-------|   M  |   ←  |   ↓  |   →  |   O  |  '   |
- * |------+------+------+------+------+------|  Mute |    | Pause |------+------+------+------+------+------|
- * |LShift|   Z  |   X  |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   /  |RShift|
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |-------.    ,-------|      |   ←  |   ↓  |   →  |      |      |
+ * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |       |    |       |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LCTL | LALT | LCMD | MO(1)| /Enter  /       \Space \  | MO(2)| RCMD | RALT | RCTL |
+ *            |      |      |      |      | /       /       \      \  |      |      |      |      |
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  *
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |  `   |  F1  |  F2  |  F3  |  F4  |  F5  |                    |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
+ * |      |  F1  |  F2  |  F3  |  F4  |  F5  |                    |  F6  |  F7  |  F8  |  F9  |  F10 | F11  |
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |  ~   |   Q  |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |   ;  | F12  |
+ * |      |      |      |      |      |      |                    |      |      |      |      |      | F12  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Tab  |   !  |   @  |   #  |   $  |   %  |-------.    ,-------|   ^  |   &  |   *  |   (  |   )  |  |   |
- * |------+------+------+------+------+------|  Mute |    | Pause |------+------+------+------+------+------|
- * |LShift|   =  |   -  |   +  |   {  |   }  |-------|    |-------|   [  |   ]  |   ,  |   .  |   \  |RShift|
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |-------.    ,-------|      |      |      |      |      |      |
+ * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |       |    |       |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LCTL | LALT | LCMD | MO(1)| /Enter  /       \Space \  | MO(2)| RCMD | RALT | RCTL |
+ *            |      |      |      |      | /       /       \      \  |      |      |      |      |
+ *            |      |      |      |      |/       /         \      \ |      |      |      |      |
+ *            `----------------------------------'           '------''---------------------------'
+ *
+ * ,-----------------------------------------.                    ,-----------------------------------------.
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |-------.    ,-------|      |      |      |      |      |      |
+ * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |       |    |       |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
+ * `-----------------------------------------/       /     \      \-----------------------------------------'
+ *            |      |      |      |      | /       /       \      \  |      |      |      |      |
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
 
     [_MAC0] = LAYOUT(
-        DE_LABK,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                       KC_6,     KC_7,     KC_8,    KC_9,    KC_0,    DE_GRV,
-        KC_ESC,   KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                       KC_J,     KC_L,     KC_U,    DE_Y,    DE_SCLN, KC_BSPC,
-        KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,    KC_G,                       KC_M,     KC_N,     KC_E,    KC_I,    KC_O,    DE_QUOT,
-        KC_LSFT,  DE_Z,   KC_X,    KC_C,    KC_D,    KC_V,  KC_MUTE,    KC_MPLY, KC_K,     KC_H,     KC_COMM, KC_DOT,  DE_SLSH, KC_RSFT,
-                          KC_LCTL, KC_LALT, KC_LCMD, MO(_MAC1), KC_ENT,     KC_SPC,  MO(_MAC2),  KC_RCMD,  KC_RALT, KC_RCTL
+        DE_EQL,     DE_1,       DE_2,       DE_3,       DE_4,       DE_5,                               DE_6,       DE_7,       DE_8,       DE_9,       DE_0,       DE_GRV,
+        KC_ESC,     DE_Q,       DE_W,       DE_F,       DE_P,       DE_B,                               DE_J,       DE_L,       DE_U,       DE_Y,       DE_SCLN,    KC_BSPC,
+        KC_TAB,     DE_A,       DE_R,       DE_S,       DE_T,       DE_G,                               DE_M,       DE_N,       DE_E,       DE_I,       DE_O,       DE_QUOT,
+        KC_LSFT,    DE_Z,       DE_X,       DE_C,       DE_D,       DE_V,       KC_MUTE,    KC_MPLY,    DE_K,       DE_H,       DE_COMM,    DE_DOT,     DE_SLSH,    KC_RSFT,
+                                KC_LCTL,    KC_LALT,    KC_LCMD,    MO(_MAC1),  KC_ENT,     KC_SPC,     MO(_MAC2),  KC_RCMD,    KC_RALT,    KC_RCTL
     ),
     [_MAC1] = LAYOUT (
-        DE_LABK,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                       KC_6,     KC_7,     KC_8,    KC_9,    KC_0,    KC_GRV,
-        KC_ESC,   KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                       KC_J,     KC_L,     KC_UP,   DE_Y,    DE_SCLN, KC_BSPC,
-        KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,    KC_G,                       KC_M,     KC_LEFT,  KC_DOWN, KC_RIGHT,KC_O,    KC_QUOT,
-        KC_LSFT,  DE_Z,   KC_X,    KC_C,    KC_D,    KC_V,  KC_MUTE,   KC_MPLY,  KC_K,     KC_H,     KC_COMM, KC_DOT,  DE_SLSH, KC_RSFT,
-                        _______, _______, _______, MO(_MAC1), KC_ENT,    KC_SPC,   MO(_MAC2),  _______,  _______, _______
+        _______,    _______,    _______,    _______,    _______,    _______,                            _______,    _______,    _______,    _______,    _______,    _______,
+        _______,    _______,    _______,    _______,    _______,    _______,                            _______,    _______,    KC_UP,      _______,    _______,    _______,
+        _______,    _______,    _______,    _______,    _______,    _______,                            _______,    KC_LEFT,    KC_DOWN,    KC_RIGHT,   _______,    _______,
+        _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,
+                                _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______
     ),
     [_MAC2] = LAYOUT (
-        DE_LABK,   KC_F1,  KC_F2,   KC_F3,   KC_F4,   KC_F5,                      KC_F6,    KC_F7,    KC_F8,   KC_F9,   KC_F10,  KC_F11,
-        KC_ESC,   KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                       KC_J,     KC_L,     KC_U,    DE_Y,    DE_SCLN, KC_F12,
-        KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,    KC_G,                       KC_M,     KC_N,     KC_E,    KC_I,    KC_O,    KC_QUOT,
-        KC_LSFT,  DE_EQL, DE_MINS, DE_PLUS, DE_LCBR, DE_RCBR, KC_MUTE,   KC_MPLY,  KC_A,     KC_H,     KC_COMM, KC_DOT,  DE_SLSH, KC_RSFT,
-        _______, _______, _______, MO(_MAC1), KC_ENT,    KC_SPC,   MO(_MAC2),  _______,  _______, _______
-    ),
-    [_WIN0] = LAYOUT(
-        DE_LABK,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                       KC_6,     KC_7,     KC_8,    KC_9,    KC_0,    DE_GRV,
-        KC_ESC,   KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                       KC_J,     KC_L,     KC_U,    DE_Y,    DE_SCLN, KC_BSPC,
-        KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,    KC_G,                       KC_M,     KC_N,     KC_E,    KC_I,    KC_O,    DE_QUOT,
-        KC_LSFT,  DE_Z,   KC_X,    KC_C,    KC_D,    KC_V,  KC_MUTE,    KC_MPLY, KC_K,     KC_H,     KC_COMM, KC_DOT,  DE_SLSH, KC_RSFT,
-                          KC_LCTL, KC_LALT, KC_LCMD, MO(_WIN1), KC_ENT,     KC_SPC,  MO(_WIN2),  KC_RCMD,  KC_RALT, KC_RCTL
-    ),
-    [_WIN1] = LAYOUT (
-        DE_LABK,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                       KC_6,     KC_7,     KC_8,    KC_9,    KC_0,    KC_GRV,
-        KC_ESC,   KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                       KC_J,     KC_L,     KC_UP,   DE_Y,    DE_SCLN, KC_BSPC,
-        KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,    KC_G,                       KC_M,     KC_LEFT,  KC_DOWN, KC_RIGHT,KC_O,    KC_QUOT,
-        KC_LSFT,  DE_Z,   KC_X,    KC_C,    KC_D,    KC_V,  KC_MUTE,   KC_MPLY,  KC_K,     KC_H,     KC_COMM, KC_DOT,  DE_SLSH, KC_RSFT,
-                          KC_LCTL, KC_LALT, KC_LCMD, MO(_WIN1), KC_ENT,    KC_SPC,   MO(_WIN2),  KC_RCMD,  KC_RALT, KC_RCTL
-    ),
-    [_WIN2] = LAYOUT (
-        DE_LABK,   KC_F1,  KC_F2,   KC_F3,   KC_F4,   KC_F5,                      KC_F6,    KC_F7,    KC_F8,   KC_F9,   KC_F10,  KC_F11,
-        KC_ESC,   KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                       KC_J,     KC_L,     KC_U,    DE_Y,    DE_SCLN, KC_F12,
-        KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,    KC_G,                       KC_M,     KC_N,     KC_E,    KC_I,    KC_O,    KC_QUOT,
-        KC_LSFT,  DE_EQL, DE_MINS, DE_PLUS, DE_LCBR, DE_RCBR, KC_MUTE,   KC_MPLY,  KC_A,     KC_H,     KC_COMM, KC_DOT,  DE_SLSH, KC_RSFT,
-                          KC_LCTL, KC_LALT, KC_LCMD, MO(_WIN1), KC_ENT,    KC_SPC,   MO(_WIN2),  KC_RCMD,  KC_RALT, KC_RCTL
+        _______,    KC_F1,      KC_F2,      KC_F3,      KC_F4,      KC_F5,                              KC_F6,      KC_F7,      KC_F8,      KC_F9,      KC_F10,     KC_F11,
+        _______,    _______,    _______,    _______,    _______,    _______,                            _______,    _______,    _______,    _______,    _______,    KC_F12,
+        _______,    _______,    _______,    _______,    _______,    _______,                            _______,    _______,    _______,    _______,    _______,    _______,
+        _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,
+                                _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______
     )
 };
 
@@ -119,10 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [_MAC0] = { ENCODER_CCW_CW(MS_WHLD, MS_WHLU), ENCODER_CCW_CW(KC_VOLU, KC_VOLD) },
     [_MAC1] = { ENCODER_CCW_CW(KC_BRIU, KC_BRID), ENCODER_CCW_CW(KC_MNXT, KC_MPRV) },
-    [_MAC2] = { ENCODER_CCW_CW(KC_RIGHT, KC_LEFT), ENCODER_CCW_CW(KC_DOWN, KC_UP) },
-    [_WIN0] = { ENCODER_CCW_CW(MS_WHLD, MS_WHLU), ENCODER_CCW_CW(KC_VOLU, KC_VOLD) },
-    [_WIN1] = { ENCODER_CCW_CW(KC_BRIU, KC_BRID), ENCODER_CCW_CW(KC_MNXT, KC_MPRV) },
-    [_WIN2] = { ENCODER_CCW_CW(KC_RIGHT, KC_LEFT), ENCODER_CCW_CW(KC_DOWN, KC_UP) }
+    [_MAC2] = { ENCODER_CCW_CW(KC_RIGHT, KC_LEFT), ENCODER_CCW_CW(KC_DOWN, KC_UP) }
 };
 #endif
 
